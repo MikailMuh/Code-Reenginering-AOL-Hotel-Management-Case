@@ -1,12 +1,14 @@
-package afterRefactor;
+package afterRefactor.infra;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
-class write implements Runnable
+import afterRefactor.domain.Holder;
+
+public class Write implements Runnable
 {
-    Holder hotel_ob;
-    write(Holder hotel_ob)
+    private final Holder hotel_ob;
+    public Write(Holder hotel_ob)
     {
         this.hotel_ob=hotel_ob;
     }

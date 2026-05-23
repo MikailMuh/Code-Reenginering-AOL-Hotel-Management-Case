@@ -1,14 +1,14 @@
-package afterRefactor;
+package afterRefactor.domain;
 
 import java.io.Serializable;
 
-class Food implements Serializable
+public class Food implements Serializable
 {
-    int itemno;
-    int quantity;   
-    float price;
+	public int itemno;
+	public int quantity;   
+	public float price;
     
-    Food(int itemno,int quantity)
+    public Food(int itemno,int quantity)
     {
         this.itemno=itemno;
         this.quantity=quantity;

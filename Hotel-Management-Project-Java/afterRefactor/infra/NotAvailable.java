@@ -1,6 +1,6 @@
-package afterRefactor;
+package afterRefactor.infra;
 
-class NotAvailable extends Exception
+public class NotAvailable extends Exception
 {
     @Override
     public String toString()
