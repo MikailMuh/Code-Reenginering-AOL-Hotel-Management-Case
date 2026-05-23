@@ -1,6 +1,7 @@
 package afterRefactor.service;
 
 import afterRefactor.domain.Holder;
+import afterRefactor.domain.RoomType;
 import afterRefactor.domain.Singleroom;
 
 public class CheckoutService {
@@ -12,29 +13,22 @@ public class CheckoutService {
 		this.hotel_ob = hotel_ob;
 	}
 	
-	public String occupantName(int roomType, int rn) {
-        Singleroom room = roomAt(roomType, rn);
+	public String occupantName(RoomType type, int rn) {
+        Singleroom room = roomAt(type, rn);
         return room == null ? null : room.name;
     }
 	
-	public void deallocate(int roomType, int rn) {
-        switch (roomType) {
-            case 1: hotel_ob.luxury_doublerrom[rn] = null; break;
-            case 2: hotel_ob.deluxe_doublerrom[rn] = null; break;
-            case 3: hotel_ob.luxury_singleerrom[rn] = null; break;
-            case 4: hotel_ob.deluxe_singleerrom[rn] = null; break;
-        }
+	public void deallocate(RoomType type, int rn) {
+		if (type == null) return;
+        Singleroom[] arr = type.arrayIn(hotel_ob);
+        if (rn < 0 || rn >= arr.length) return;
+        arr[rn] = null;
     }
 	
-	private Singleroom roomAt(int roomType, int rn) {
-        switch (roomType) {
-            case 1: return hotel_ob.luxury_doublerrom[rn];
-            case 2: return hotel_ob.deluxe_doublerrom[rn];
-            case 3: return hotel_ob.luxury_singleerrom[rn];
-            case 4: return hotel_ob.deluxe_singleerrom[rn];
-            default: return null;
-        }
+	private Singleroom roomAt(RoomType type, int rn) {
+		if (type == null) return null;
+        Singleroom[] arr = type.arrayIn(hotel_ob);
+        if (rn < 0 || rn >= arr.length) return null;
+        return arr[rn];
     }
-	
-
 }

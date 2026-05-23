@@ -2,6 +2,7 @@ package afterRefactor.service;
 
 import afterRefactor.domain.Food;
 import afterRefactor.domain.Holder;
+import afterRefactor.domain.RoomType;
 import afterRefactor.domain.Singleroom;
 
 public class BillingService {
@@ -12,19 +13,25 @@ public class BillingService {
 		// TODO Auto-generated constructor stub
 		this.hotel_ob = hotel_ob;
 	}
-	public String buildBill(int roomType, int localRoomIndex) {
+	public String buildBill(RoomType type, int localRoomIndex) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n*******\n");
         sb.append(" Bill:-\n");
         sb.append("*******\n");
 
-        Singleroom room = findRoom(roomType, localRoomIndex);
-        if (room == null) {
+        
+        if (type == null) {
             sb.append("Not valid\n");
             return sb.toString();
         }
+        Singleroom[]arr = type.arrayIn(hotel_ob);
+        if(localRoomIndex < 0 || localRoomIndex >= arr.length || arr[localRoomIndex] == null) {
+        	sb.append("Not valid\n");
+        	return sb.toString();
+        }
+        Singleroom room = arr[localRoomIndex];
 
-        int rate = RoomCatalog.dailyRate(roomType);
+        int rate = type.dailyRate();
         double amount = rate;
         sb.append("\nRoom Charge - ").append(rate).append("\n");
         sb.append("\n===============\n");
@@ -43,14 +50,6 @@ public class BillingService {
         return sb.toString();
     }
 	
-	private Singleroom findRoom(int roomType, int rn) {
-        switch (roomType) {
-            case 1: return hotel_ob.luxury_doublerrom[rn];
-            case 2: return hotel_ob.deluxe_doublerrom[rn];
-            case 3: return hotel_ob.luxury_singleerrom[rn];
-            case 4: return hotel_ob.deluxe_singleerrom[rn];
-            default: return null;
-        }
-    }
+	
 
 }
