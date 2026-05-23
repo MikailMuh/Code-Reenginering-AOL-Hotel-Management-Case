@@ -15,11 +15,11 @@ public class Write implements Runnable
     @Override
     public void run() {
           try{
-        FileOutputStream fout=new FileOutputStream("backup");
-        ObjectOutputStream oos=new ObjectOutputStream(fout);
-        oos.writeObject(hotel_ob);
+        	  FileOutputStream fout=new FileOutputStream("backup");
+        	  ObjectOutputStream oos=new ObjectOutputStream(fout);
+        	  oos.writeObject(hotel_ob);
         }
-        catch(Exception e)
+          	catch(Exception e)
         {
             System.out.println("Error in writing "+e);
         }         
